@@ -19,12 +19,15 @@ class Us:
         print(self.pd.head())
 
     def getUniqueAddress(self):
-        self.pd['city_street']=self.pd['CITY']+' '+ self.pd['street']+' '+self.pd['found_house_number']
+        self.pd['city_street']=self.pd['CITY']+', '+ self.pd['street']+', '+self.pd['found_house_number']
         return pd.unique(self.pd['city_street'])
 
 if __name__=='__main__':
     us=Us('us.csv')
+    g=geo.GeoCode(conf.API)
     unique_add=us.getUniqueAddress()
-    print(unique_add)
-    # g=geo.GeoCode(conf.API)
+    # print(unique_add)
+    for add in unique_add[1:10]:
+        print(add)
+        print(g.getGeo(add))
     # g.getGeo('колобок центральная')
