@@ -1,8 +1,10 @@
+import requests
+
 class GeoCode:
     def __init__(self, api):
         self.API=api
 
-    def getGeoCode(self, address):   #Получаем геопозиции города
+    def getGeo(self, address):   #Получаем геопозиции города
         url = 'https://geocode-maps.yandex.ru/1.x?geocode="'+address+'"&apikey='+self.API+'&format=json'
         resp = requests.get(url)
         resp = resp.json()['response']['GeoObjectCollection']['featureMember']
@@ -11,3 +13,8 @@ class GeoCode:
         else:
             print('NOT FOUND! --> ' + address)
             return '- -'
+
+    def getInfo(item):   #Получаем инфо об организации
+        url = 'https://search-maps.yandex.ru/v1/?apikey='+self.API+'&text="'+item+'"&lang=ru_RU&type=biz'
+        resp = requests.get(url)
+        return resp.json()
