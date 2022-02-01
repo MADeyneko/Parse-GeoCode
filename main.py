@@ -67,7 +67,7 @@ class Us:
     def __init__(self, path):
         self.path=path
         self.pd=pd.read_csv(path, sep=';')
-        print(self.pd.head())
+        # print(self.pd.head())
 
     def getUniqueAddress(self):
         self.pd['city_street']=self.pd['CITY']+', '+ self.pd['street']+', '+self.pd['found_house_number']
