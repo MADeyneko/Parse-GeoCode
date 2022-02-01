@@ -12,7 +12,10 @@ class GeoCode:
             return resp[0]['GeoObject']['boundedBy']['Envelope']
         else:
             print('NOT FOUND! --> ' + address)
-            return '- -'
+            res=dict()
+            res['lowerCorner']='-'
+            res['upperCorner']='-'
+            return res
 
     def getInfo(item):   #Получаем инфо об организации
         url = 'https://search-maps.yandex.ru/v1/?apikey='+self.API+'&text="'+item+'"&lang=ru_RU&type=biz'
