@@ -51,6 +51,8 @@ class GeoAddress:
                     self.list.append(value+';'+g['lowerCorner']+';'+g['upperCorner'])
                 count+=1
                 self.bar.update(count)
+            print("\nSuccess")
+            self.file_save()
         except:
             self.file_save()
             self.file.close()
@@ -58,7 +60,7 @@ class GeoAddress:
     def file_save(self):
         for row in self.list:
             self.file.write("%s\n" % row)
-        print("\nSave file \n")
+        print("\nSave file")
 
     def __del__(self):
         self.file.close()
@@ -73,8 +75,20 @@ class Us:
         self.pd['city_street']=self.pd['CITY']+', '+ self.pd['street']+', '+self.pd['found_house_number']
         return pd.unique(self.pd['city_street'])
 
+class Merch:
+    def __init__(self, path):
+        self.path=path
+        self.pd=pd.read_csv(path, sep=';')
+
+    def getUniqueAddress(self):
+        return pd.unique(self.pd['addr'])
+
+
 if __name__=='__main__':
     us=Us('us.csv')
-    unique_add=us.getUniqueAddress()
+    merch=Merch('cashout_addr.csv')
     ga=GeoAddress()
+    unique_add=us.getUniqueAddress()
+    ga.add_adress(unique_add)
+    unique_add=merch.getUniqueAddress()
     ga.add_adress(unique_add)

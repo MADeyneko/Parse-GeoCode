@@ -6,8 +6,12 @@ class GeoCode:
 
     def getGeo(self, address):   #Получаем геопозиции города
         url = 'https://geocode-maps.yandex.ru/1.x?geocode="'+address+'"&apikey='+self.API+'&format=json'
-        resp = requests.get(url)
-        resp = resp.json()['response']['GeoObjectCollection']['featureMember']
+        try:
+            resp = requests.get(url)
+            resp = resp.json()['response']['GeoObjectCollection']['featureMember']
+        except Exception as a:
+            print(a)
+        
         if len(resp) > 0:
             return resp[0]['GeoObject']['boundedBy']['Envelope']
         else:
