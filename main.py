@@ -51,14 +51,14 @@ class GeoAddress:
                     self.list.append(value+';'+g['lowerCorner']+';'+g['upperCorner'])
                 count+=1
                 self.bar.update(count)
-        except :
+        except:
             self.file_save()
             self.file.close()
 
     def file_save(self):
         for row in self.list:
             self.file.write("%s\n" % row)
-        print("Save file \n")
+        print("\nSave file \n")
 
     def __del__(self):
         self.file.close()
