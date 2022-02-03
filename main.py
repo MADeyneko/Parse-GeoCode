@@ -28,8 +28,9 @@ class GeoAddress:
 
     def __init__(self):
         file=open('address_geocode', 'r+')
-        self.add=self.get_address(file.read().splitlines())
-        self.file=file
+        self.file=file.read().splitlines()
+
+        self.add=self.get_address(self.file)
         self.list=[]
         self.geo=geo.GeoCode(conf.API)
 
@@ -56,6 +57,16 @@ class GeoAddress:
         except:
             self.file_save()
             self.file.close()
+
+    def get_not_found(self):
+        rows=self.file
+        res=[]
+        for row in rows:
+            r=row.split(';')
+            if r[1]=='-':
+                res.append(r[0])
+
+        return res
 
     def file_save(self):
         for row in self.list:
@@ -92,3 +103,4 @@ if __name__=='__main__':
     ga.add_adress(unique_add)
     unique_add=merch.getUniqueAddress()
     ga.add_adress(unique_add)
+    df=pd.DataFrame(ga.get_not_found(), columns=['address']).to_csv('add_not_found.csv')
